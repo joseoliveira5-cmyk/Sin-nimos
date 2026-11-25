@@ -1,16 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina Inicial</title>
+
+    <title>Gerenciamento de Artistas</title>
+
     <link rel="stylesheet" href="/BibliotecaDeArtistas/Estilização&CSS/PaginaInicial.CSS">
+
+    <script src="/BibliotecaDeArtistas/Regras&JavaScript/PaginaInicial.js" defer></script>
 </head>
 <body>
-    <script src="/BibliotecaDeArtistas/Regras&JavaScript/PaginaInicial.js"></script>
-    <!--Cecilia:-->
-    <!--Sofhia:-->
-    <!--Leticia:-->
-    <!--Luiz:-->
+    <main>
+        <h1>Gerenciamento de Artistas</h1>
+
+        <!-- UC06 - CADASTRAR ARTISTA -->
+        <section id="areaCadastro">
+            <h2>Cadastrar Artista</h2>
+            <form id="formCadastro">
+                <label for="nomeArtista">Nome:</label>
+                <input type="text" id="nomeArtista" required>
+                <label for="cidadeArtista">Cidade:</label>
+                <input type="text" id="cidadeArtista" required>
+                <label for="estadoArtista">Estado:</label>
+                <input type="text" id="estadoArtista" required>
+                <label for="generoArtista">Gênero musical:</label>
+                <input type="text" id="generoArtista" required>
+                <button type="submit">Cadastrar artista</button>
+                <p id="erroCadastro"></p>
+                <p id="sucessoCadastro"></p>
+            </form>
+        </section>
+
+        <!-- UC07 - EDITAR ARTISTA -->
+        <section id="areaEdicao">
+            <h2>Editar minhas informações</h2>
+            <form id="formEdicao">
+                <label for="editarNome">Nome:</label>
+                <input type="text" id="editarNome" required>
+                <label for="editarCidade">Cidade:</label>
+                <input type="text" id="editarCidade" required>
+                <label for="editarEstado">Estado:</label>
+                <input type="text" id="editarEstado" required>
+                <label for="editarGenero">Gênero musical:</label>
+                <input type="text" id="editarGenero" required>
+                <button type="submit">Salvar alterações</button>
+                <p id="erroEdicao"></p>
+                <p id="sucessoEdicao"></p>
+            </form>
+        </section>
+
+        <!-- UC08 - REMOVER ARTISTA -->
+        <section id="areaAdministracao">
+            <h2>Administração de artistas</h2>
+            <div id="listaAdministrativa"></div>
+        </section>
+
+        <!-- DIRETÓRIO PÚBLICO -->
+        <section id="areaDiretorio">
+            <h2>Diretório de Artistas</h2>
+            <p id="listaVazia">
+                Nenhum artista publicado ainda.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cidade</th>
+                        <th>Estado</th>
+                        <th>Gênero musical</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaArtistas"></tbody>
+            </table>
+        </section>
+    </main>
 </body>
 </html>
