@@ -1,0 +1,226 @@
+@import url("./PaginaInicial.CSS");
+
+/* Abertura do catálogo */
+#areaPesquisa,
+#areaFiltros,
+#areaDiretorio {
+    scroll-margin-top: 110px;
+}
+
+#areaPesquisa {
+    background: linear-gradient(135deg, #fff 0%, color-mix(in srgb, var(--cor-destaque-clara) 34%, white) 100%);
+}
+
+#areaPesquisa::after {
+    content: "ENCONTRE SUA PRÓXIMA DESCOBERTA MUSICAL  ♫";
+    display: block;
+    margin-top: 18px;
+    color: color-mix(in srgb, var(--cor-destaque-escura) 65%, white);
+    font-size: .66rem;
+    font-weight: 850;
+    letter-spacing: .13em;
+}
+
+#areaPesquisa .campo-pesquisa {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+#areaPesquisa .campo-pesquisa input {
+    flex: 1;
+    min-height: 52px;
+}
+
+#areaPesquisa .campo-pesquisa input::placeholder {
+    content: "";
+}
+
+#areaPesquisa .campo-pesquisa button {
+    min-width: 145px;
+}
+
+#areaFiltros .grupo-filtros {
+    align-items: end;
+}
+
+#areaFiltros .grupo-filtros>select {
+    min-width: 0;
+}
+
+#btnLimpar {
+    border: 1px solid var(--cor-destaque);
+    color: var(--cor-destaque-escura);
+    background: transparent;
+    box-shadow: none;
+}
+
+#btnLimpar:hover {
+    color: #fff;
+    background: var(--cor-destaque-escura);
+}
+
+#btnFiltrar::before {
+    content: "⌕";
+    font-size: 1.1rem;
+}
+
+#erroPesquisa,
+#erroFiltro,
+#listaVazia,
+#statusCidades {
+    color: var(--cor-suave);
+    font-size: .86rem;
+}
+
+#erroPesquisa:empty,
+#erroFiltro:empty,
+#listaVazia:empty {
+    display: none;
+}
+
+/* Diretório em tabela: mantém a estrutura atual, mas com acabamento mais rico. */
+#areaDiretorio {
+    overflow: hidden;
+}
+
+#areaDiretorio .tabela-container {
+    overflow-x: auto;
+    border: 1px solid var(--cor-borda);
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(57, 35, 70, .045);
+}
+
+#areaDiretorio table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#areaDiretorio thead {
+    background: linear-gradient(110deg, var(--cor-destaque-escura), var(--cor-destaque));
+}
+
+#areaDiretorio th {
+    padding: 16px 18px;
+    color: #fff;
+    text-align: left;
+    font-size: .73rem;
+    font-weight: 850;
+    letter-spacing: .105em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#areaDiretorio th:first-child {
+    border-radius: 0;
+}
+
+#areaDiretorio td {
+    padding: 16px 18px;
+    border-top: 1px solid #f0eaf2;
+    color: var(--cor-texto);
+    font-size: .91rem;
+}
+
+#tabelaArtistas tr {
+    transition: background .2s ease;
+}
+
+#tabelaArtistas tbody tr:nth-child(even) {
+    background: #fbf8fc;
+}
+
+#tabelaArtistas tbody tr:hover {
+    background: var(--cor-destaque-clara);
+}
+
+#tabelaArtistas td:first-child {
+    color: var(--cor-destaque-escura);
+    font-weight: 850;
+}
+
+#tabelaArtistas a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--cor-destaque-escura);
+    font-weight: 850;
+    text-decoration: none;
+}
+
+#tabelaArtistas a::after {
+    content: "↗";
+    font-size: .85em;
+    transition: transform .2s ease;
+}
+
+#tabelaArtistas a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+#tabelaArtistas a:hover::after {
+    transform: translate(2px, -2px);
+}
+
+#listaVazia {
+    padding: 15px 18px;
+    border-radius: 12px;
+    background: var(--cor-destaque-clara);
+}
+
+@media (max-width: 760px) {
+    #areaPesquisa .campo-pesquisa {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #areaPesquisa .campo-pesquisa button {
+        width: 100%;
+    }
+
+    #areaFiltros .grupo-filtros {
+        grid-template-columns: 1fr;
+    }
+}
+
+@import url("./PaginaInicial.CSS");
+
+#areaPesquisa,
+#areaFiltros,
+#areaDiretorio {
+    scroll-margin-top: 112px;
+}
+
+#areaPesquisa .campo-pesquisa {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#areaFiltros .grupo-filtros {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 13px;
+}
+
+#areaDiretorio .tabela-container {
+    overflow-x: auto;
+    border: 1px solid var(--cor-borda);
+    border-radius: 17px;
+    background: #fff;
+}
+
+@media (max-width: 680px) {
+
+    #areaPesquisa .campo-pesquisa,
+    #areaFiltros .grupo-filtros {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
