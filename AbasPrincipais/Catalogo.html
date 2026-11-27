@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas | Catálogo</title>
+    <link rel="stylesheet" href="../Estilização/PaginaInicial.CSS">
+<script src="../Regras/Catalogo.js" defer></script>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+
+        <div class="container cabecalho-conteudo">
+
+            <div class="logo">
+
+                <span class="logo-icone">♫</span>
+
+                <div>
+                    <h1>Artistas</h1>
+                    <p>Gerenciamento musical</p>
+                </div>
+
+            </div>
+
+            <nav class="navegacao">
+
+                <a href="PaginaInicial.html">
+                    Início
+                </a>
+
+                <a href="Catalogo.html" class="link-ativo">
+                    Catálogo de artistas
+                </a>
+
+            </nav>
+
+            <span class="status-sistema">
+                Sistema ativo
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+
+        <!-- INTRODUÇÃO -->
+        <section class="introducao">
+
+            <span class="etiqueta">
+                Diretório musical
+            </span>
+
+            <h2>Catálogo de artistas</h2>
+
+            <p>
+                Pesquise e encontre artistas cadastrados na biblioteca.
+            </p>
+
+        </section>
+
+
+        <!-- UC02 - PESQUISAR ARTISTAS -->
+        <section id="areaPesquisa" class="secao">
+
+            <h2>Pesquisar artistas</h2>
+
+            <div class="campo-pesquisa">
+
+                <input
+                    type="text"
+                    id="pesquisaArtista"
+                    placeholder="Digite o nome do artista..."
+                >
+
+                <button
+                    type="button"
+                    id="btnPesquisar"
+                >
+                    Pesquisar
+                </button>
+
+            </div>
+
+            <p id="erroPesquisa"></p>
+
+        </section>
+
+
+        <!-- UC03 - FILTRAR ARTISTAS -->
+        <section id="areaFiltros" class="secao">
+
+            <h2>Filtrar artistas</h2>
+
+            <div class="grupo-filtros">
+
+                <!-- FILTRO POR CIDADE -->
+                <div class="campo-filtro">
+
+                    <label for="filtroCidade">
+                        Cidade
+                    </label>
+
+                    <select id="filtroCidade" name="cidade">
+
+                        <option value="">
+                            Carregando municípios...
+                        </option>
+
+                    </select>
+
+                    <p id="statusCidades"></p>
+
+                </div>
+
+
+                <!-- CARREGAR MUNICÍPIOS DO IBGE -->
+                <script>
+
+                    document.addEventListener("DOMContentLoaded", async function () {
+
+                        const filtroCidade =
+                            document.getElementById("filtroCidade");
+
+                        const statusCidades =
+                            document.getElementById("statusCidades");
+
+                        try {
+
+                            statusCidades.textContent =
+                                "Consultando municípios do IBGE...";
+
+                            const resposta = await fetch(
+                                "https://servicodados.ibge.gov.br/api/v1/localidades/municipios?orderBy=nome"
+                            );
+
+                            if (!resposta.ok) {
+                                throw new Error("Erro ao consultar o IBGE.");
+                            }
+
+                            const municipios = await resposta.json();
+
+                            if (!Array.isArray(municipios) || municipios.length === 0) {
+                                throw new Error("Nenhum município encontrado.");
+                            }
+
+                            filtroCidade.innerHTML =
+                                '<option value="">Todas as cidades</option>';
+
+                            municipios.forEach(function (municipio) {
+
+                                const opcao = document.createElement("option");
+
+                                opcao.value = municipio.nome;
+                                opcao.textContent = municipio.nome;
+
+                                filtroCidade.appendChild(opcao);
+
+                            });
+
+                            statusCidades.textContent =
+                                municipios.length + " municípios carregados.";
+
+                            console.log(
+                                municipios.length + " municípios carregados."
+                            );
+
+                        } catch (erro) {
+
+                            console.error(
+                                "Erro ao carregar municípios:",
+                                erro
+                            );
+
+                            filtroCidade.innerHTML =
+                                '<option value="">Falha ao carregar municípios</option>';
+
+                            statusCidades.textContent =
+                                "Não foi possível consultar o IBGE. Atualize a página.";
+
+                        }
+
+                    });
+
+                </script>
+
+
+                <!-- FILTRO POR ESTADO -->
+                <select id="filtroEstado">
+
+                    <option value="">
+                        Todos os estados
+                    </option>
+
+                    <optgroup label="Nordeste">
+
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="SE">Sergipe (SE)</option>
+
+                    </optgroup>
+
+                    <optgroup label="Norte">
+
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="TO">Tocantins (TO)</option>
+
+                    </optgroup>
+
+                    <optgroup label="Sudeste">
+
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="SP">São Paulo (SP)</option>
+
+                    </optgroup>
+
+                    <optgroup label="Sul">
+
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+
+                    </optgroup>
+
+                    <optgroup label="Centro-Oeste">
+
+                        <option value="DF">Distrito Federal (DF)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+
+                    </optgroup>
+
+                </select>
+
+
+                <!-- FILTRO POR GÊNERO -->
+                <select id="filtroGenero">
+
+                    <option value="">Todos os gêneros</option>
+
+                    <option value="Pop">Pop</option>
+                    <option value="Hip-Hop / Rap">Hip-Hop / Rap</option>
+                    <option value="Música Latina (Latin Pop / Urbano)">Música Latina (Latin Pop / Urbano)</option>
+                    <option value="Rock">Rock</option>
+                    <option value="EDM (Electronic Dance Music)">EDM (Electronic Dance Music)</option>
+                    <option value="Country">Country</option>
+                    <option value="R&B (Rhythm and Blues)">R&B (Rhythm and Blues)</option>
+                    <option value="K-Pop">K-Pop</option>
+                    <option value="Reggaeton">Reggaeton</option>
+                    <option value="Afrobeats">Afrobeats</option>
+                    <option value="Trap">Trap</option>
+                    <option value="Sertanejo (Universitário e Raiz)">Sertanejo (Universitário e Raiz)</option>
+                    <option value="Funk Brasileiro (Mandela, Melody, Consciente)">Funk Brasileiro (Mandela, Melody, Consciente)</option>
+                    <option value="Indie Pop">Indie Pop</option>
+                    <option value="Indie Rock">Indie Rock</option>
+                    <option value="House (Tech House, Deep House, Afro House)">House (Tech House, Deep House, Afro House)</option>
+                    <option value="Música Mexicana (Corridos Tumbados / Regional)">Música Mexicana (Corridos Tumbados / Regional)</option>
+                    <option value="Soul">Soul</option>
+                    <option value="Alternative Rock">Alternative Rock</option>
+                    <option value="Heavy Metal">Heavy Metal</option>
+                    <option value="Dance-Pop">Dance-Pop</option>
+                    <option value="Phonk">Phonk</option>
+                    <option value="Amapiano">Amapiano</option>
+                    <option value="Pagode">Pagode</option>
+                    <option value="Forró (Eletrônico e Piseiro)">Forró (Eletrônico e Piseiro)</option>
+                    <option value="Techno (Melodic Techno, Hard Techno)">Techno (Melodic Techno, Hard Techno)</option>
+                    <option value="Synth-Pop">Synth-Pop</option>
+                    <option value="Drill (UK Drill, NY Drill)">Drill (UK Drill, NY Drill)</option>
+                    <option value="Neo-Soul">Neo-Soul</option>
+                    <option value="Pop Punk">Pop Punk</option>
+                    <option value="Reggae">Reggae</option>
+                    <option value="Dancehall">Dancehall</option>
+                    <option value="Salsa">Salsa</option>
+                    <option value="Bachata">Bachata</option>
+                    <option value="Cumbia">Cumbia</option>
+                    <option value="MPB (Música Popular Brasileira)">MPB (Música Popular Brasileira)</option>
+                    <option value="Bossa Nova">Bossa Nova</option>
+                    <option value="Samba">Samba</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Blues">Blues</option>
+                    <option value="Folk">Folk</option>
+                    <option value="Americana">Americana</option>
+                    <option value="Gospel / Música Cristã Contemporânea (CCM)">Gospel / Música Cristã Contemporânea (CCM)</option>
+                    <option value="Lo-Fi Hip-Hop / Chillhop">Lo-Fi Hip-Hop / Chillhop</option>
+                    <option value="Drum and Bass (DnB)">Drum and Bass (DnB)</option>
+                    <option value="Dubstep">Dubstep</option>
+                    <option value="Trance">Trance</option>
+                    <option value="Disco / Nu-Disco">Disco / Nu-Disco</option>
+                    <option value="J-Pop">J-Pop</option>
+                    <option value="Música Clássica / Neoclássica">Música Clássica / Neoclássica</option>
+
+                </select>
+
+
+                <!-- BOTÕES -->
+                <button
+                    type="button"
+                    id="btnFiltrar"
+                >
+                    Aplicar filtros
+                </button>
+
+                <button
+                    type="button"
+                    id="btnLimpar"
+                >
+                    Limpar filtros
+                </button>
+
+            </div>
+
+            <p id="erroFiltro"></p>
+
+        </section>
+
+
+        <!-- DIRETÓRIO PÚBLICO -->
+        <section id="areaDiretorio" class="secao">
+
+            <h2>Artistas disponíveis</h2>
+
+            <p id="listaVazia"></p>
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cidade</th>
+                            <th>Estado</th>
+                            <th>Gênero musical</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelaArtistas"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+
+        <div class="container">
+            <p>Biblioteca de Artistas © 2026</p>
+        </div>
+
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Artista | Biblioteca de Artistas</title>
+    <link rel="stylesheet" href="../Estilização/PerfilArtista.CSS">
+    <script src="../Regras/PerfilArtista.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Biblioteca de Artistas</h1>
+
+        <nav>
+            <a href="PaginaInicial.html">Página Inicial</a>
+            <a href="Catalogo.html">Catálogo de Artistas</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="mensagemPerfil">
+            <p>Carregando perfil do artista...</p>
+        </section>
+
+        <article id="perfilArtista" hidden>
+
+            <section class="cabecalhoPerfil">
+
+                <img
+                    id="fotoArtista"
+                    src=""
+                    alt="Foto do artista"
+                    hidden
+                >
+
+                <div class="informacoesPrincipais">
+
+                    <h2 id="nomeArtista"></h2>
+
+                    <p id="localizacaoArtista"></p>
+
+                    <p id="generoArtista"></p>
+
+                </div>
+
+            </section>
+
+            <section class="secaoBiografia">
+
+                <h3>Biografia</h3>
+
+                <p id="biografiaArtista"></p>
+
+            </section>
+
+            <section class="secaoCanais">
+
+                <h3>Redes sociais e canais</h3>
+
+                <div id="canaisArtista"></div>
+
+            </section>
+
+        </article>
+
+    </main>
+
+    <footer>
+        <p>Biblioteca de Artistas - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

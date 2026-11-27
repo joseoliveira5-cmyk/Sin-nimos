@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas | Página Inicial</title>
+    <link rel="stylesheet" href="../Estilização/PaginaInicial.CSS">
+<script src="../Regras/PaginaInicial.js" defer></script>
+</head>
+
+<body>
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="container cabecalho-conteudo">
+            <div class="logo">
+                <span class="logo-icone">♫</span>
+                <div>
+                    <h1>Artistas</h1>
+                    <p>Gerenciamento musical</p>
+                </div>
+            </div>
+            <nav class="navegacao">
+                <a href="PaginaInicial.html" class="link-ativo">
+                    Início
+                </a>
+                <a href="Catalogo.html">
+                    Catálogo de artistas
+                </a>
+            </nav>
+            <span class="status-sistema">
+                Sistema ativo
+            </span>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+        <!-- INTRODUÇÃO -->
+        <section class="introducao">
+            <span class="etiqueta">
+                Biblioteca musical
+            </span>
+            <h2>Bem-vindo à plataforma de artistas</h2>
+            <p>
+                Um espaço dedicado ao cadastro, gerenciamento e divulgação
+                de artistas musicais.
+            </p>
+            <a href="Catalogo.html" class="botao">
+                Explorar catálogo
+            </a>
+        </section>
+
+        <!-- UC06 - CADASTRAR ARTISTA -->
+        <section id="areaCadastro" class="secao">
+            <h2>Cadastrar artista</h2>
+            <form id="formCadastro">
+
+                <!-- NOME -->
+                <input
+                    type="text"
+                    id="nomeArtista"
+                    placeholder="Nome do artista"
+                    required
+                >
+
+                <!-- CIDADE -->
+                <div class="campo-filtro">
+                    <label for="cidadeArtista">
+                        Cidade
+                    </label>
+                    <select
+                        id="cidadeArtista"
+                        name="cidade"
+                        required
+                    >
+                        <option value="">
+                            Carregando municípios...
+                        </option>
+                    </select>
+                    <p id="statusCidades">
+                        Aguardando consulta ao IBGE...
+                    </p>
+                </div>
+
+                <!-- CARREGAMENTO DOS MUNICÍPIOS -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", async function () {
+                        const cidadeArtista =
+                            document.getElementById("cidadeArtista");
+                        const statusCidades =
+                            document.getElementById("statusCidades");
+                        try {
+                            statusCidades.textContent =
+                                "Consultando municípios do IBGE...";
+                            const resposta = await fetch(
+                                "https://servicodados.ibge.gov.br/api/v1/localidades/municipios?orderBy=nome"
+                            );
+                            if (!resposta.ok) {
+                                throw new Error("Falha na consulta ao IBGE.");
+                            }
+                            const municipios = await resposta.json();
+                            if (!Array.isArray(municipios) || municipios.length === 0) {
+                                throw new Error("Nenhum município foi retornado.");
+                            }
+                            cidadeArtista.innerHTML =
+                                '<option value="">Selecione a cidade</option>';
+                            municipios.forEach(function (municipio) {
+                                const opcao = document.createElement("option");
+                                opcao.value = municipio.nome;
+                                opcao.textContent = municipio.nome;
+                                cidadeArtista.appendChild(opcao);
+                            });
+                            statusCidades.textContent =
+                                municipios.length + " municípios carregados com sucesso.";
+                            console.log(
+                                municipios.length + " municípios carregados."
+                            );
+                        } catch (erro) {
+                            console.error(
+                                "Erro ao carregar municípios:",
+                                erro
+                            );
+                            cidadeArtista.innerHTML =
+                                '<option value="">Não foi possível carregar as cidades</option>';
+                            statusCidades.textContent =
+                                "Falha ao consultar o IBGE. Verifique sua conexão.";
+                        }
+                    });
+                </script>
+
+                <!-- ESTADO -->
+                <select id="estadoArtista" required>
+                    <option value="">
+                        Selecione o estado
+                    </option>
+                    <optgroup label="Nordeste">
+                        <option value="AL">Alagoas (AL)</option>
+                        <option value="BA">Bahia (BA)</option>
+                        <option value="CE">Ceará (CE)</option>
+                        <option value="MA">Maranhão (MA)</option>
+                        <option value="PB">Paraíba (PB)</option>
+                        <option value="PE">Pernambuco (PE)</option>
+                        <option value="PI">Piauí (PI)</option>
+                        <option value="RN">Rio Grande do Norte (RN)</option>
+                        <option value="SE">Sergipe (SE)</option>
+                    </optgroup>
+                    <optgroup label="Norte">
+                        <option value="AC">Acre (AC)</option>
+                        <option value="AP">Amapá (AP)</option>
+                        <option value="AM">Amazonas (AM)</option>
+                        <option value="PA">Pará (PA)</option>
+                        <option value="RO">Rondônia (RO)</option>
+                        <option value="RR">Roraima (RR)</option>
+                        <option value="TO">Tocantins (TO)</option>
+                    </optgroup>
+                    <optgroup label="Sudeste">
+                        <option value="ES">Espírito Santo (ES)</option>
+                        <option value="MG">Minas Gerais (MG)</option>
+                        <option value="RJ">Rio de Janeiro (RJ)</option>
+                        <option value="SP">São Paulo (SP)</option>
+                    </optgroup>
+                    <optgroup label="Sul">
+                        <option value="PR">Paraná (PR)</option>
+                        <option value="RS">Rio Grande do Sul (RS)</option>
+                        <option value="SC">Santa Catarina (SC)</option>
+                    </optgroup>
+                    <optgroup label="Centro-Oeste">
+                        <option value="DF">Distrito Federal (DF)</option>
+                        <option value="GO">Goiás (GO)</option>
+                        <option value="MT">Mato Grosso (MT)</option>
+                        <option value="MS">Mato Grosso do Sul (MS)</option>
+                    </optgroup>
+                </select>
+
+                <!-- GÊNERO MUSICAL -->
+                <select id="generoArtista" required>
+                    <option value="">
+                        Selecione o gênero musical
+                    </option>
+                    <option value="Pop">Pop</option>
+                    <option value="Hip-Hop / Rap">Hip-Hop / Rap</option>
+                    <option value="Música Latina (Latin Pop / Urbano)">Música Latina (Latin Pop / Urbano)</option>
+                    <option value="Rock">Rock</option>
+                    <option value="EDM (Electronic Dance Music)">EDM (Electronic Dance Music)</option>
+                    <option value="Country">Country</option>
+                    <option value="R&B (Rhythm and Blues)">R&B (Rhythm and Blues)</option>
+                    <option value="K-Pop">K-Pop</option>
+                    <option value="Reggaeton">Reggaeton</option>
+                    <option value="Afrobeats">Afrobeats</option>
+                    <option value="Trap">Trap</option>
+                    <option value="Sertanejo (Universitário e Raiz)">Sertanejo (Universitário e Raiz)</option>
+                    <option value="Funk Brasileiro (Mandela, Melody, Consciente)">Funk Brasileiro (Mandela, Melody, Consciente)</option>
+                    <option value="Indie Pop">Indie Pop</option>
+                    <option value="Indie Rock">Indie Rock</option>
+                    <option value="House (Tech House, Deep House, Afro House)">House (Tech House, Deep House, Afro House)</option>
+                    <option value="Música Mexicana (Corridos Tumbados / Regional)">Música Mexicana (Corridos Tumbados / Regional)</option>
+                    <option value="Soul">Soul</option>
+                    <option value="Alternative Rock">Alternative Rock</option>
+                    <option value="Heavy Metal">Heavy Metal</option>
+                    <option value="Dance-Pop">Dance-Pop</option>
+                    <option value="Phonk">Phonk</option>
+                    <option value="Amapiano">Amapiano</option>
+                    <option value="Pagode">Pagode</option>
+                    <option value="Forró (Eletrônico e Piseiro)">Forró (Eletrônico e Piseiro)</option>
+                    <option value="Techno (Melodic Techno, Hard Techno)">Techno (Melodic Techno, Hard Techno)</option>
+                    <option value="Synth-Pop">Synth-Pop</option>
+                    <option value="Drill (UK Drill, NY Drill)">Drill (UK Drill, NY Drill)</option>
+                    <option value="Neo-Soul">Neo-Soul</option>
+                    <option value="Pop Punk">Pop Punk</option>
+                    <option value="Reggae">Reggae</option>
+                    <option value="Dancehall">Dancehall</option>
+                    <option value="Salsa">Salsa</option>
+                    <option value="Bachata">Bachata</option>
+                    <option value="Cumbia">Cumbia</option>
+                    <option value="MPB (Música Popular Brasileira)">MPB (Música Popular Brasileira)</option>
+                    <option value="Bossa Nova">Bossa Nova</option>
+                    <option value="Samba">Samba</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Blues">Blues</option>
+                    <option value="Folk">Folk</option>
+                    <option value="Americana">Americana</option>
+                    <option value="Gospel / Música Cristã Contemporânea (CCM)">Gospel / Música Cristã Contemporânea (CCM)</option>
+                    <option value="Lo-Fi Hip-Hop / Chillhop">Lo-Fi Hip-Hop / Chillhop</option>
+                    <option value="Drum and Bass (DnB)">Drum and Bass (DnB)</option>
+                    <option value="Dubstep">Dubstep</option>
+                    <option value="Trance">Trance</option>
+                    <option value="Disco / Nu-Disco">Disco / Nu-Disco</option>
+                    <option value="J-Pop">J-Pop</option>
+                    <option value="Música Clássica / Neoclássica">Música Clássica / Neoclássica</option>
+                </select>
+                <button type="submit">
+                    Cadastrar artista
+                </button>
+                <p id="erroCadastro"></p>
+                <p id="sucessoCadastro"></p>
+            </form>
+        </section>
+
+        <!-- UC07 - EDITAR ARTISTA -->
+        <section id="areaEdicao" class="secao">
+            <h2>Editar informações do artista</h2>
+            <form id="formEdicao">
+                <input
+                    type="text"
+                    id="editarNome"
+                    placeholder="Nome do artista"
+                    required
+                >
+                <input
+                    type="text"
+                    id="editarCidade"
+                    placeholder="Cidade"
+                    required
+                >
+                <input
+                    type="text"
+                    id="editarEstado"
+                    placeholder="Estado"
+                    required
+                >
+                <input
+                    type="text"
+                    id="editarGenero"
+                    placeholder="Gênero musical"
+                    required
+                >
+                <button type="submit">
+                    Salvar alterações
+                </button>
+                <p id="erroEdicao"></p>
+                <p id="sucessoEdicao"></p>
+            </form>
+        </section>
+
+        <!-- UC08 - ADMINISTRAÇÃO -->
+        <section id="areaAdministracao" class="secao">
+            <h2>Gerenciamento de artistas</h2>
+            <div
+                id="listaAdministrativa"
+                class="lista-administrativa"
+            ></div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="container">
+            <p>Biblioteca de Artistas © 2026</p>
+        </div>
+    </footer>
+</body>
+</html>
